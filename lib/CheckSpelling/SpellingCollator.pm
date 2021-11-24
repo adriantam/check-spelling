@@ -102,6 +102,7 @@ sub main {
   my $more_warnings = CheckSpelling::Util::get_file_from_env('more_warnings', '/dev/stderr');
   my $counter_summary = CheckSpelling::Util::get_file_from_env('counter_summary', '/dev/stderr');
   my $should_exclude_file = CheckSpelling::Util::get_file_from_env('should_exclude_file', '/dev/null');
+  my $unknown_word_limit = CheckSpelling::Util::get_val_from_env('unknown_word_limit', undef);
 
   open WARNING_OUTPUT, '>:utf8', $warning_output;
   open MORE_WARNINGS, '>:utf8', $more_warnings;
@@ -221,8 +222,12 @@ sub main {
       if ($warning =~ s/(line \d+) cols (\d+-\d+): '(.*)'/$1, columns $2, Warning - `$3` is not a recognized word. (unrecognized-spelling)/) {
         my ($line, $range, $item) = ($1, $2, $3);
         next if skip_item($item);
-        if (defined $seen{$item}) {
-          print MORE_WARNINGS "$file: $warning\n";
+        my $seen_count = $seen{$item};
+        if (defined $seen_count) {
+          if (!defined $unknown_word_limit || ($seen_count++ < $unknown_word_limit)) {
+            print MORE_WARNINGS "$file: $warning\n"
+          }
+          $seen{$item} = $seen_count;
           next;
         }
         $seen{$item} = 1;
