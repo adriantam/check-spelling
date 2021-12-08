@@ -211,6 +211,7 @@ sub main {
     close WARNINGS;
   }
 
+  my %last_seen;
   for my $directory (@directories) {
     next unless (-s "$directory/warnings");
     next unless open(NAME, '<:utf8', "$directory/name");
@@ -226,6 +227,8 @@ sub main {
         if (defined $seen_count) {
           if (!defined $unknown_word_limit || ($seen_count++ < $unknown_word_limit)) {
             print MORE_WARNINGS "$file: $warning\n"
+          } else {
+            $last_seen{$item} = $warning;
           }
           $seen{$item} = $seen_count;
           next;
@@ -243,6 +246,16 @@ sub main {
   for my $warning (@delayed_warnings) {
     count_warning $warning;
     print WARNING_OUTPUT $warning;
+  }
+  if (defined $unknown_word_limit) {
+    for my $warned_word (sort keys %seen) {
+      my $warning_count = $seen{$warned_word};
+      next unless $warning_count >= $unknown_word_limit;
+      my $warning = $last_seen{$warned_word};
+      $warning =~ s/\Q. (unrecognized-spelling)\E/-- word found $warning_count times. (limited-references)\n/;
+      print WARNING_OUTPUT $warning;
+      count_warning 'limited-references';
+    }
   }
   close WARNING_OUTPUT;
 

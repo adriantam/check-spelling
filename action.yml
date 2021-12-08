@@ -158,7 +158,7 @@ inputs:
   unknown_word_limit:
     description: 'Only report an unknown word this many times'
     required: false
-    default: '20'
+    default: '5'
 
 outputs:
   unknown_words:
