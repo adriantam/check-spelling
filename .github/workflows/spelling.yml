@@ -46,7 +46,7 @@ jobs:
         unknown_word_limit: 2
 
     - name: store-comment
-      if: failure()
+      if: failure() && steps.spelling.outputs.internal_state_directory
       uses: actions/upload-artifact@v2
       with:
         retention-days: 1
@@ -61,7 +61,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    if: always() && needs.spelling.result == 'failure'
+    if: always() && needs.spelling.result == 'failure' && needs.spelling.outputs.internal_state_directory
     steps:
     - name: checkout
       uses: actions/checkout@v2
