@@ -220,6 +220,7 @@ sub main {
     open WARNINGS, '<:utf8', "$directory/warnings";
     for $warning (<WARNINGS>) {
       chomp $warning;
+      print MORE_WARNINGS "ATQ warning: $warning\n"
       if ($warning =~ s/(line \d+) cols (\d+-\d+): '(.*)'/$1, columns $2, Warning - `$3` is not a recognized word. (unrecognized-spelling)/) {
         my ($line, $range, $item) = ($1, $2, $3);
         next if skip_item($item);
@@ -241,7 +242,6 @@ sub main {
     }
     close WARNINGS;
   }
-  print MORE_WARNINGS "ATQ: testing";
   close MORE_WARNINGS;
 
   for my $warning (@delayed_warnings) {
