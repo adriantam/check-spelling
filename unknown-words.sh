@@ -1035,7 +1035,7 @@ run_spell_check() {
   perl -p -n -e 's/ \(.*//' > "$run_output"
   word_splitter_status="${PIPESTATUS[2]} ${PIPESTATUS[3]}"
   echo "ATQ more_warnings"
-  cat "$more_warnings"
+  cat $more_warnings
   cat "$more_warnings" >> "$warning_output"
   echo "ATQ warning_output $warning_output"
   cat $warning_output
