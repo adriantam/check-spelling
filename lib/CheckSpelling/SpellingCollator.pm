@@ -206,6 +206,7 @@ sub main {
     for my $warning (<WARNINGS>) {
       chomp $warning;
       count_warning $warning;
+      print WARNING_OUTPUT "early_warning $warning\n";
       print WARNING_OUTPUT "$warning\n";
     }
     close WARNINGS;
@@ -249,6 +250,7 @@ sub main {
   for my $warning (@delayed_warnings) {
     count_warning $warning;
     print WARNING_OUTPUT $warning;
+    print WARNING_OUTPUT "ATQ delayed $warning";
   }
   if (defined $unknown_word_limit) {
     for my $warned_word (sort keys %seen) {
@@ -256,12 +258,12 @@ sub main {
       next unless $warning_count >= $unknown_word_limit;
       my $warning = $last_seen{$warned_word};
       $warning =~ s/\Q. (unrecognized-spelling)\E/-- word found $warning_count times. (limited-references)\n/;
+      print WARNING_OUTPUT "ATQ unknonw_word_limit $warning";
       print WARNING_OUTPUT $warning;
       count_warning 'limited-references';
     }
   }
   print WARNING_OUTPUT "ATQ ATQ";
-  close WARNING_OUTPUT;
 
   if (%counters) {
     my $continue='';
@@ -306,12 +308,15 @@ sub main {
       my @words = keys(%word_map);
       if (scalar(@words) > 1) {
         print $key." (".(join ", ", sort { length($a) <=> length($b) || $a cmp $b } @words).")";
+        print WARNING_OUTPUT "ATQ join";
       } else {
         print $words[0];
+        print WARNING_OUTPUT "ATQ words $words[0]";
       }
       print "\n";
     }
   }
+  close WARNING_OUTPUT;
 }
 
 1;
