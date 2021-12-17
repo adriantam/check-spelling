@@ -1023,7 +1023,7 @@ run_spell_check() {
     queue_size=1
   fi
 
-  begin_group 'Spell check'
+  begin_group 'Spell check ATQ'
   warning_output=$(mktemp -d)/warnings.txt
   more_warnings=$(mktemp)
   cat $file_list |\
