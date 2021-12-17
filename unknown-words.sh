@@ -1026,10 +1026,9 @@ run_spell_check() {
   begin_group 'Spell check ATQ'
   warning_output=$(mktemp -d)/warnings.txt
   more_warnings=$(mktemp)
-  echo "ATQ $file_list"
-  echo $file_list
+  echo "ATQ file_list $file_list"
+  cat $file_list
   echo "ATQ warning_output $warning_output"
-  cat $warning_output
   cat $file_list |\
   env -i SHELL="$SHELL" PATH="$PATH" LC_ALL="C" HOME="$HOME" xargs -0 -n$queue_size "-P$job_count" "$word_splitter" |\
   expect="$expect_path" warning_output="$warning_output" more_warnings="$more_warnings" should_exclude_file="$should_exclude_file" counter_summary="$counter_summary_file" unknown_word_limit="$INPUT_UNKNOWN_WORD_LIMIT" "$word_collator" |\
