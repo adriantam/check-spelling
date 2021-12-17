@@ -1034,13 +1034,13 @@ run_spell_check() {
   expect="$expect_path" warning_output="$warning_output" more_warnings="$more_warnings" should_exclude_file="$should_exclude_file" counter_summary="$counter_summary_file" unknown_word_limit="$INPUT_UNKNOWN_WORD_LIMIT" "$word_collator" |\
   perl -p -n -e 's/ \(.*//' > "$run_output"
   word_splitter_status="${PIPESTATUS[2]} ${PIPESTATUS[3]}"
-  echo "ATQ more_warnings"
+  echo "ATQ more_warnings $more_warnings"
   cat $more_warnings
   cat "$more_warnings" >> "$warning_output"
   echo "ATQ warning_output $warning_output"
   cat $warning_output
-  cat "$warning_output" >> "$warning2_output"
-  echo "ATQ more warning2 $warning2_output"
+  #cat "$warning_output" >> "$warning2_output"
+  #echo "ATQ more warning2 $warning2_output"
   cat $more_warnings
   echo "ATQ counter_summary: $counter_summary_file"
   cat $counter_summary_file
