@@ -259,7 +259,7 @@ sub main {
       count_warning 'limited-references';
     }
   }
-  echo WARNING_OUTPUT "ATQ ATQ";
+  print WARNING_OUTPUT "ATQ ATQ";
   close WARNING_OUTPUT;
 
   if (%counters) {
