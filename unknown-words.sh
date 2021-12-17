@@ -1131,14 +1131,10 @@ spelling_info() {
 $2"
   fi
   spelling_body "$out" "$3"
-  if [ -n "$VERBOSE" ]; then
     OUTPUT="#$report_header
 
 $OUTPUT"
     post_commit_comment
-  else
-    echo "$OUTPUT"
-  fi
 }
 spelling_body() {
   err="$2"
