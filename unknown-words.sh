@@ -1028,11 +1028,10 @@ run_spell_check() {
   more_warnings=$(mktemp)
   cat $file_list |\
   env -i SHELL="$SHELL" PATH="$PATH" LC_ALL="C" HOME="$HOME" xargs -0 -n$queue_size "-P$job_count" "$word_splitter" |\
-  echo "ATQ warning_output: $warning_output"
+  echo "ATQ warning_output"
   cat $warning_output
-  echo "ATQ more warning: $more_warnings"
-  cat $ore_warnings
-  echo "ATQ should exclude: $should_exclude_file"
+  echo "ATQ more warning"
+  cat $more_warnings
   echo "ATQ counter_summary: $counter_summary_file"
   cat $counter_summary_file
   echo "ATQ unknown_word_limit: $INPUT_UNKNOWN_WORD_LIMIT"
