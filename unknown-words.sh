@@ -1535,6 +1535,7 @@ compare_new_output() {
     (sed -e 's/#.*//' "$expect_path" | sort_unique) > "$sorted_expect"
     expect_path="$sorted_expect"
 
+    echo "ATQ run_output $run_output"
     diff -w -U0 "$expect_path" "$run_output" |
       grep_v_spellchecker > "$diff_output"
   end_group
