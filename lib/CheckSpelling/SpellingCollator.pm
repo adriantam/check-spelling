@@ -245,6 +245,7 @@ sub main {
 
   for my $warning (@delayed_warnings) {
     count_warning $warning;
+    print "ATQ perl: $warning";
     print WARNING_OUTPUT $warning;
   }
   if (defined $unknown_word_limit) {
