@@ -212,16 +212,17 @@ sub main {
   }
 
   my %last_seen;
+  print WARNING_OUTPUT "ATQ before loop dir\n";
   for my $directory (@directories) {
     next unless (-s "$directory/warnings");
     next unless open(NAME, '<:utf8', "$directory/name");
     my $file=<NAME>;
     close NAME;
     open WARNINGS, '<:utf8', "$directory/warnings";
-    print MORE_WARNINGS "ATQ about to start\n";
+    print WARNING_OUTPUT "ATQ about to start\n";
     for $warning (<WARNINGS>) {
       chomp $warning;
-      print MORE_WARNINGS "ATQ warning: $file $warning\n";
+      print WARNING_OUTPUT "ATQ warning: $file $warning\n";
       if ($warning =~ s/(line \d+) cols (\d+-\d+): '(.*)'/$1, columns $2, Warning - `$3` is not a recognized word. (unrecognized-spelling)/) {
         my ($line, $range, $item) = ($1, $2, $3);
         next if skip_item($item);
