@@ -1042,6 +1042,9 @@ run_spell_check() {
   warning2_output=$data_dir/more_warning.txt
   cat "$warning_output" >> "$warning2_output"
   echo "ATQ more warning2 $warning2_output"
+  warning3_output=$data_dir/more_warning2.txt
+  cat "$warning2_output" >> "$warning3_output"
+  echo "ATQ more warning3 $warning2_output"
   cat $more_warnings
   echo "ATQ counter_summary: $counter_summary_file"
   cat $counter_summary_file
