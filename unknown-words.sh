@@ -1026,8 +1026,6 @@ run_spell_check() {
   begin_group 'Spell check'
   warning_output=$(mktemp -d)/warnings.txt
   more_warnings=$(mktemp)
-  echo "ATQ: $file_list"
-  cat $file_list
   cat $file_list |\
   env -i SHELL="$SHELL" PATH="$PATH" LC_ALL="C" HOME="$HOME" xargs -0 -n$queue_size "-P$job_count" "$word_splitter" |\
   expect="$expect_path" warning_output="$warning_output" more_warnings="$more_warnings" should_exclude_file="$should_exclude_file" counter_summary="$counter_summary_file" unknown_word_limit="$INPUT_UNKNOWN_WORD_LIMIT" "$word_collator" |\
@@ -1575,6 +1573,7 @@ skip_curl() {
 set_patch_remove_add() {
   patch_remove=$(perl -ne 'next unless s/^-([^-])/$1/; s/\n/ /; print' "$diff_output")
   begin_group 'New output'
+    echo "ATQ: $diff_output"
     patch_add=$(perl -ne 'next unless s/^\+([^+])/$1/; s/\n/ /; print' "$diff_output")
 
     if [ -z "$patch_add" ]; then
