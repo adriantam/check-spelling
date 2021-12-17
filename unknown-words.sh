@@ -1035,19 +1035,13 @@ run_spell_check() {
   perl -p -n -e 's/ \(.*//' > "$run_output"
   word_splitter_status="${PIPESTATUS[2]} ${PIPESTATUS[3]}"
   echo "ATQ more_warnings $more_warnings"
-  cat $more_warnings
+  echo "$(cat $more_warnings)"
+  echo "ATQ before_warnings"
   cat "$more_warnings" >> "$warning_output"
   echo "ATQ warning_output $warning_output"
-  cat $warning_output
-  warning2_output=$data_dir/more_warning.txt
-  cat "$warning_output" >> "$warning2_output"
-  echo "ATQ more warning2 $warning2_output"
-  warning3_output=$data_dir/more_warning2.txt
-  cat "$warning2_output" >> "$warning3_output"
-  echo "ATQ more warning3 $warning3_output"
-  cat $more_warnings
+  echo "$(cat $warning_output)"
   echo "ATQ counter_summary: $counter_summary_file"
-  cat $counter_summary_file
+  echo "$(cat $counter_summary_file)"
   echo "ATQ unknown_word_limit: $INPUT_UNKNOWN_WORD_LIMIT"
   echo "ATQ word collector: $word_collator"
   rm "$more_warnings"
