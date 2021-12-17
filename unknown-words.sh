@@ -1026,8 +1026,6 @@ run_spell_check() {
   begin_group 'Spell check ATQ'
   warning_output=$(mktemp -d)/warnings.txt
   more_warnings=$(mktemp)
-  cat $file_list |\
-  env -i SHELL="$SHELL" PATH="$PATH" LC_ALL="C" HOME="$HOME" xargs -0 -n$queue_size "-P$job_count" "$word_splitter" |\
   echo "ATQ warning_output"
   cat $warning_output
   echo "ATQ more warning"
@@ -1036,6 +1034,8 @@ run_spell_check() {
   cat $counter_summary_file
   echo "ATQ unknown_word_limit: $INPUT_UNKNOWN_WORD_LIMIT"
   echo "ATQ word collector: $word_collator"
+  cat $file_list |\
+  env -i SHELL="$SHELL" PATH="$PATH" LC_ALL="C" HOME="$HOME" xargs -0 -n$queue_size "-P$job_count" "$word_splitter" |\
   expect="$expect_path" warning_output="$warning_output" more_warnings="$more_warnings" should_exclude_file="$should_exclude_file" counter_summary="$counter_summary_file" unknown_word_limit="$INPUT_UNKNOWN_WORD_LIMIT" "$word_collator" |\
   perl -p -n -e 's/ \(.*//' > "$run_output"
   word_splitter_status="${PIPESTATUS[2]} ${PIPESTATUS[3]}"
