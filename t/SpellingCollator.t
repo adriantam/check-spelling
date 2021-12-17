@@ -60,6 +60,7 @@ sub read_file {
 }
 
 sub check_output_file {
+  print "ATQ: Perl";
   my ($file, $expected) = @_;
   my $content = read_file($file);
   is($content, $expected);
