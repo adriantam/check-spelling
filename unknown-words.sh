@@ -1046,7 +1046,6 @@ run_spell_check() {
   echo "ATQ unknown_word_limit: $INPUT_UNKNOWN_WORD_LIMIT"
   echo "ATQ word collector: $word_collator"
   rm "$more_warnings"
-  cat "ATQ $warning_output"
   echo "::set-output name=warnings::$warning_output" >> $output_variables
   end_group
   if [ "$word_splitter_status" != '0 0' ]; then
