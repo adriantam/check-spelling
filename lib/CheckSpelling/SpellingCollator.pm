@@ -152,7 +152,6 @@ sub main {
       close STATS;
       $words=get_field($stats, 'words');
       $unrecognized=get_field($stats, 'unrecognized');
-      print STDOUT "ATQ unrecognized perl $unrecognized";
       $unknown=get_field($stats, 'unknown');
       $unique=get_field($stats, 'unique');
       #print STDERR "$file (unrecognized: $unrecognized; unique: $unique; unknown: $unknown, words: $words)\n";
@@ -172,7 +171,6 @@ sub main {
       push @cleanup_directories, $directory;
       next;
     }
-    print STDOUT "ATQ directory/unknown $directory/unknown";
     open UNKNOWN, '<:utf8', "$directory/unknown";
     for $token (<UNKNOWN>) {
       $token =~ s/\R//;
@@ -208,7 +206,6 @@ sub main {
     for my $warning (<WARNINGS>) {
       chomp $warning;
       count_warning $warning;
-      print STDOUT "ATQ perl early warning1: $warning";
       print WARNING_OUTPUT "$warning\n";
     }
     close WARNINGS;
@@ -240,16 +237,15 @@ sub main {
       } else {
         count_warning $warning;
       }
-      print STDOUT "ATQ perl directory warning1: $warning";
       print WARNING_OUTPUT "$file: $warning\n";
     }
     close WARNINGS;
   }
+  print MORE_WARNINGS "ATQ: testing";
   close MORE_WARNINGS;
 
   for my $warning (@delayed_warnings) {
     count_warning $warning;
-    print STDOUT "ATQ perl delayed warning1: $warning";
     print WARNING_OUTPUT $warning;
   }
   if (defined $unknown_word_limit) {
@@ -258,7 +254,6 @@ sub main {
       next unless $warning_count >= $unknown_word_limit;
       my $warning = $last_seen{$warned_word};
       $warning =~ s/\Q. (unrecognized-spelling)\E/-- word found $warning_count times. (limited-references)\n/;
-      print STDOUT "ATQ perl warning1: $warning";
       print WARNING_OUTPUT $warning;
       count_warning 'limited-references';
     }
