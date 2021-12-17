@@ -218,10 +218,10 @@ sub main {
     my $file=<NAME>;
     close NAME;
     open WARNINGS, '<:utf8', "$directory/warnings";
-    print WARNING_OUTPUT "ATQ about to start\n";
+    print COUNTER_SUMMARY "ATQ about to start\n";
     for $warning (<WARNINGS>) {
       chomp $warning;
-      print WARNING_OUTPUT "ATQ warning: $file $warning\n";
+      print COUNTER_SUMMARY "ATQ warning: $file $warning\n";
       if ($warning =~ s/(line \d+) cols (\d+-\d+): '(.*)'/$1, columns $2, Warning - `$3` is not a recognized word. (unrecognized-spelling)/) {
         my ($line, $range, $item) = ($1, $2, $3);
         next if skip_item($item);
